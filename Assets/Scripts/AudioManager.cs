@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
 	public Sound[] sounds;
 	[SerializeField] Slider music, sfx;
 	public static float vol;
-	AudioSource audioSource;
+	public AudioSource audioSource;
 	public static float volume;
 	
 	void Awake()
@@ -76,10 +76,10 @@ public class AudioManager : MonoBehaviour
 		Sound s = Array.Find(sounds, sound => sound.name == name);
 		if (s == null)
 		{
-			Debug.Log("AudioManager.cs > Failed to find audio "+name);
+			Debug.Log("AudioManager.cs > Failed to find audio sfx "+name);
 		}
 		s.source.volume = PlayerPrefs.GetFloat("sfx", sfx.value);
-		Debug.Log("AudioManager.cs > Played audio "+name);
+		Debug.Log("AudioManager.cs > Played audio sfx "+name);
 		s.source.Play();
 	}
 	public void Stop(string name)
@@ -91,6 +91,10 @@ public class AudioManager : MonoBehaviour
 		}
 		s.source.Stop();
         Debug.Log("AudioManager.cs > Stopped audio "+name);
+	}
+	public void Update()
+	{
+		audioSource.volume = music.value;
 	}
 }
 

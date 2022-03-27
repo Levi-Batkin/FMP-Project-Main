@@ -13,9 +13,5 @@ public class DebugLoader : MonoBehaviour
         debugtext.text = "Version: v1.0.4 - Skyfall Adventure\nProcessor: "+SystemInfo.processorType+"\nGraphics: "+SystemInfo.graphicsDeviceName+" "+SystemInfo.graphicsDeviceType+"";
     }
  
-    private void Update()
-    {
-
-    }
 }
  

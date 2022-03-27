@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Discord;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -98,11 +100,17 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time * 5f);
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * 3f);
     }
     public void PlayClick()
     {
+        GetComponent<AudioManager>().PlaySFX("click");
         Debug.Log("AudioManager.cs > Audioclick sound played.");
+    }
+    public void PlayBG()
+    {
+        GetComponent<AudioManager>().Play("background");
+        Debug.Log("AudioManager.cs > Audiobackground sound played.");
     }
     public void PlayHover()
     {
@@ -184,6 +192,10 @@ public class MenuController : MonoBehaviour
                 Debug.Log("GameCore > FPS capped at "+Screen.currentResolution.refreshRate+"!");
             }
         }
+    }
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("GameScene");
     }
     public void MainMenu()
     {
