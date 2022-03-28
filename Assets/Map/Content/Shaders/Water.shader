@@ -1,4 +1,4 @@
-Shader "Flooded_Grounds/PBR_Water" {
+Shader "Map/PBR_Water" {
 Properties {
 	_Color ("Main Color", Color) = (1,1,1,1)
 	_Emis("Self-Ilumination", Range(0,1)) = 0.1
@@ -96,7 +96,6 @@ void surf (Input IN, inout SurfaceOutputStandard o) {
 	o.Emission = tex * _Color * _Emis;
 	
 	o.Normal = normalize(finalnormal);
-	//o.Alpha = _Opacity;
 	
 }
 ENDCG
