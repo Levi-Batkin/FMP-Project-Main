@@ -1,4 +1,4 @@
-Shader "Flooded_Grounds/PBR_TopBlend" {
+Shader "Map/TopBlend" {
     Properties {
         _MainTex ("Base Albedo (RGB)", 2D) = "white" {}
         _Spc("Base Metalness(R) Smoothness(A)", 2D) = "black" {}
