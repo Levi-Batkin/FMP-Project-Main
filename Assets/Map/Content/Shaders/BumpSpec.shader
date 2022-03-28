@@ -1,7 +1,7 @@
 ﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 
-Shader "Flooded_Grounds/Triplanar_BumpSpec"
+Shader "Map/BumpSpec"
 {
     Properties
     {
