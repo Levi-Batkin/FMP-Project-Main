@@ -1,6 +1,4 @@
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Flooded_Grounds/Skybox_Rotating" {
+Shader "Map/Skybox_Rotating" {
 Properties {
 	_Tint ("Tint Color", Color) = (.5, .5, .5, .5)
 	[Gamma] _Exposure ("Exposure", Range(0, 8)) = 1.0
