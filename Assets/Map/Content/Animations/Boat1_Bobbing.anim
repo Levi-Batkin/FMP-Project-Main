@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Prop_Boat_A_Bobbing
+  m_Name: Boat1_Bobbing
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0

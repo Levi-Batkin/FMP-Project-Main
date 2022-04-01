@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Prop_Boat_A_Bobbing_Ctrl
+  m_Name: Boat1_Bobbing_Ctrl
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
