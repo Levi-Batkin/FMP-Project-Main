@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BLD_Cabins_Mossy
+  m_Name: Cabins_Mossy
   m_Shader: {fileID: 4800000, guid: 1a302063efeed7d49a2f2100a375a14f, type: 3}
   m_ShaderKeywords: _DETAIL_MULX2 _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 5

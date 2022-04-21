@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BGR_Sky1
+  m_Name: Sky1
   m_Shader: {fileID: 4800000, guid: ffb3e37e9a528d24582c94c7e42fb97d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
