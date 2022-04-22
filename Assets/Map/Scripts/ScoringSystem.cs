@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoringSystem : MonoBehaviour
 {
-    public float scorenum;
-    public float scorenum1;
+    private float scorenum;
+    private float scorenum1;
     public AudioSource collect;
     private Ray ray;
     private RaycastHit hit;
-    public GameObject vases, vases1, vases2, vases3, vases4;
+    [Header("Vase Progress Bar Objects")] 
+    
+    public GameObject vases, vases1, vases2, vases3, vases4; // Objects in Quest Menu
     // Start is called before the first frame update
     void Start()
     {
@@ -24,13 +26,14 @@ public class ScoringSystem : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 10f, Color.green);
         if (Input.GetKeyDown("e"))
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if(Physics.Raycast(ray, out hit, 100.0f))
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10f))
             {
-                if (hit.transform == transform)
+                if (hit.transform.tag == "collectable")
                 {
                     collect.Play();
                     scorenum1 = PlayerPrefs.GetFloat("vases");

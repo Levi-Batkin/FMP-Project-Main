@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Discord;
 using UnityEngine.SceneManagement;
-
+using System;
 public class MenuController : MonoBehaviour
 {
     public GameObject PlayButton, MusicVol, HowToPlayBack;
-    public GameObject mainmenu, optionsmenu, howtoplaymenu;
+    public GameObject mainmenu, optionsmenu, howtoplaymenu, loading;
     public GameObject fpson, fpsoff;
     public GameObject fullon, fulloff;
     public GameObject debugon, debugoff;
@@ -97,6 +97,21 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    IEnumerator LoadGame()
+    {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -195,7 +210,11 @@ public class MenuController : MonoBehaviour
     }
     public void PlayGame()
     {
-        SceneManager.LoadScene("GameScene");
+        mainmenu.SetActive(false);
+        loading.SetActive(true);
+        debugon.SetActive(false);
+        fpson.SetActive(false);
+        StartCoroutine(LoadGame());
     }
     public void MainMenu()
     {

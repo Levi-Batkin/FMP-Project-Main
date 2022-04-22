@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharController_Motor : MonoBehaviour {
+public class CharController : MonoBehaviour {
 
 	public float speed = 10.0f;
 	public float sensitivity = 30.0f;
@@ -16,11 +16,14 @@ public class CharController_Motor : MonoBehaviour {
 	float rotX, rotY;
 	public bool webGLRightClickRotation = true;
 	float gravity = -9.8f;
-	public float jumpHeight = 7f;
+	public float jumpHeight = 50f;
 	public float cursorlockstate = 1f;
 	private bool pauseToggle;
-	public GameObject pauseMenu;
-	public GameObject questMenu;
+	public GameObject pauseMenu, questMenu, helpMenu;
+	private Ray ray;
+    private RaycastHit hit;
+	public LayerMask groundlayer;
+	public GameObject groundchecker;
 
 	void LockCursor() {
 		cursorlockstate = 1f;
@@ -37,6 +40,7 @@ public class CharController_Motor : MonoBehaviour {
 	{
 		pauseMenu.SetActive(false);
 		questMenu.SetActive(false);
+		helpMenu.SetActive(false);
 		LockCursor();
 		rb = GetComponent<Rigidbody>();
 		character = GetComponent<CharacterController> ();
@@ -50,6 +54,7 @@ public class CharController_Motor : MonoBehaviour {
 	public void ResumeGame() {
 		pauseMenu.SetActive(false);
 		questMenu.SetActive(false);
+		helpMenu.SetActive(false);
 		cursorlockstate=1f;
 		LockCursor();
 	}
@@ -68,32 +73,11 @@ public class CharController_Motor : MonoBehaviour {
 			gravity = -9.8f;
 		}
 	}
-	void OnCollisionEnter()
-	{
-		print("Grounded? Yes");
-		isGrounded = true;
-	}
-	
-	void OnCollisionExit()
-	{
-		print("Grounded? No");
-		isGrounded = false;
-	}
-
-	void Jump()
-	{
-		if (isGrounded)
-		{
-			if (Input.GetKeyDown("space"))
-			{
-				rb.AddForce(Vector3.up * jumpHeight);
-			}
-		}
-	}
 
 	void Update(){
 		if (cursorlockstate == 1f) {
-			Jump();
+			Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * 2f, Color.red);
+
 			moveFB = Input.GetAxis ("Horizontal") * speed;
 			moveLR = Input.GetAxis ("Vertical") * speed;
 
@@ -102,10 +86,7 @@ public class CharController_Motor : MonoBehaviour {
 
 			CheckForWaterHeight ();
 
-
 			Vector3 movement = new Vector3 (moveFB, gravity, moveLR);
-
-
 
 			if (webGLRightClickRotation) {
 				if (Input.GetKey (KeyCode.Mouse0)) {
@@ -116,7 +97,15 @@ public class CharController_Motor : MonoBehaviour {
 			}
 
 			movement = transform.rotation * movement;
-			character.Move (movement * Time.deltaTime);
+			if (isGrounded == true)
+			{
+				if (Input.GetKeyDown("space"))
+				{
+					Debug.Log("Jump!");
+					movement.y = jumpHeight * gravity;
+				}
+			}
+			character.Move(movement * Time.deltaTime);
 		}
 
 		void CameraRotation(GameObject cam, float rotX, float rotY){		
@@ -138,6 +127,12 @@ public class CharController_Motor : MonoBehaviour {
 				questMenu.SetActive(false);
 				cursorlockstate = 1f;
 			}
+			if(helpMenu.activeSelf)
+			{
+				LockCursor();
+				helpMenu.SetActive(false);
+				cursorlockstate = 1f;
+			}
 			else
 			{
 				UnlockCursor();
@@ -155,6 +150,7 @@ public class CharController_Motor : MonoBehaviour {
 				{
 					UnlockCursor();
 					questMenu.SetActive(true);
+					helpMenu.SetActive(false);
 					cursorlockstate = 0f;
 				}
 			}
@@ -165,5 +161,29 @@ public class CharController_Motor : MonoBehaviour {
 				cursorlockstate = 1f;
 			}
 		}
+		if (Input.GetKeyDown("h")) 
+		{
+			if(!helpMenu.activeSelf)
+			{
+				if(!pauseMenu.activeSelf)
+				{
+					UnlockCursor();
+					helpMenu.SetActive(true);
+					questMenu.SetActive(false);
+					cursorlockstate = 0f;
+				}
+			}
+			else
+			{
+				LockCursor();
+				helpMenu.SetActive(false);
+				cursorlockstate = 1f;
+			}
+		}
+	}
+
+	void FixedUpdate()
+	{
+		isGrounded = Physics.CheckSphere(groundchecker.transform.position, 0.4f,groundlayer);
 	}
 }
