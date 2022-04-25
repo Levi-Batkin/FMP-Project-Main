@@ -47,40 +47,33 @@ public class ScoringSystem : MonoBehaviour
                     scorenum = scorenum1 + 1f;
                     PlayerPrefs.SetFloat("vases", scorenum);
                     Destroy(hit.transform.gameObject);
-                    if (scorenum == 1f)
+                    
+                    if( scorenum > 0 )
                     {
                         vases.SetActive(false);
-                        vases1.SetActive(true);
+                        vases1.SetActive(false);
                         vases2.SetActive(false);
                         vases3.SetActive(false);
                         vases4.SetActive(false);
+                    }
+                    
+                    if (scorenum == 1f)
+                    {
+                        vases1.SetActive(true);
                     }
                     if (scorenum == 2f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
                         vases2.SetActive(true);
-                        vases3.SetActive(false);
-                        vases4.SetActive(false);
                     }
                     if (scorenum == 3f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
-                        vases2.SetActive(false);
                         vases3.SetActive(true);
-                        vases4.SetActive(false);
                     }
                     if (scorenum == 4f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
-                        vases2.SetActive(false);
-                        vases3.SetActive(false);
                         vases4.SetActive(true);
                         StartCoroutine(Quest1Completed());
                         scorenum++;
-
                     }
                 }
             }

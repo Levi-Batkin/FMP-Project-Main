@@ -43,7 +43,7 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 1
+      intensity: 0.64
       radius: 0.3
       sampleCount: 3
       downsampling: 1
@@ -72,17 +72,17 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 0
     m_Settings:
-      focusDistance: 10
-      aperture: 5.6
-      focalLength: 50
+      focusDistance: 3
+      aperture: 32
+      focalLength: 15
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       shutterAngle: 270
       sampleCount: 10
-      frameBlending: 0.04
+      frameBlending: 0
   eyeAdaptation:
     m_Enabled: 0
     m_Settings:
@@ -122,13 +122,13 @@ MonoBehaviour:
         neutralWhiteClip: 10
       basic:
         postExposure: 1
-        temperature: 47.9
-        tint: 21.7
-        hueShift: 14
-        saturation: 0.541
+        temperature: 42
+        tint: 31
+        hueShift: 26
+        saturation: 0.56
         contrast: 0.9
       channelMixer:
-        red: {x: 1.02, y: 0, z: 0}
+        red: {x: 1.06, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
         currentEditingChannel: 0
@@ -314,18 +314,18 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       colored: 1
-      intensity: 0.2
+      intensity: 0.325
       size: 1
-      luminanceContribution: 0.8
+      luminanceContribution: 0.73
   vignette:
     m_Enabled: 1
     m_Settings:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.45
-      smoothness: 0.2
-      roundness: 0.888
+      intensity: 0.573
+      smoothness: 0.284
+      roundness: 0.765
       mask: {fileID: 0}
       opacity: 1
       rounded: 0
