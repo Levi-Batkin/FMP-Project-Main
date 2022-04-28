@@ -6,12 +6,13 @@ public class ScoringSystem : MonoBehaviour
 {
     private float scorenum;
     private float scorenum1;
+    [Header("Audio Source")] 
     public AudioSource collect;
     private Ray ray;
     private RaycastHit hit;
     [Header("Vase Progress Bar Objects")] 
-    
     public GameObject vases, vases1, vases2, vases3, vases4; // Objects in Quest Menu
+    public GameObject Quest1Complete;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +21,15 @@ public class ScoringSystem : MonoBehaviour
         vases2.SetActive(false);
         vases3.SetActive(false);
         vases4.SetActive(false);
+        Quest1Complete.SetActive(false);
         
     }
-
+    private IEnumerator Quest1Completed()
+    {
+        Quest1Complete.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest1Complete.SetActive(false);
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -40,37 +47,33 @@ public class ScoringSystem : MonoBehaviour
                     scorenum = scorenum1 + 1f;
                     PlayerPrefs.SetFloat("vases", scorenum);
                     Destroy(hit.transform.gameObject);
-                    if (scorenum == 1f)
+                    
+                    if( scorenum > 0 )
                     {
                         vases.SetActive(false);
-                        vases1.SetActive(true);
+                        vases1.SetActive(false);
                         vases2.SetActive(false);
                         vases3.SetActive(false);
                         vases4.SetActive(false);
+                    }
+                    
+                    if (scorenum == 1f)
+                    {
+                        vases1.SetActive(true);
                     }
                     if (scorenum == 2f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
                         vases2.SetActive(true);
-                        vases3.SetActive(false);
-                        vases4.SetActive(false);
                     }
                     if (scorenum == 3f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
-                        vases2.SetActive(false);
                         vases3.SetActive(true);
-                        vases4.SetActive(false);
                     }
                     if (scorenum == 4f)
                     {
-                        vases.SetActive(false);
-                        vases1.SetActive(false);
-                        vases2.SetActive(false);
-                        vases3.SetActive(false);
                         vases4.SetActive(true);
+                        StartCoroutine(Quest1Completed());
+                        scorenum++;
                     }
                 }
             }

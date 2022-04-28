@@ -87,7 +87,6 @@ public class CharController : MonoBehaviour {
 			CheckForWaterHeight ();
 
 			Vector3 movement = new Vector3 (moveFB, gravity, moveLR);
-
 			if (webGLRightClickRotation) {
 				if (Input.GetKey (KeyCode.Mouse0)) {
 					CameraRotation (cam, rotX, rotY);
