@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Discord;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     public GameObject PlayButton, MusicVol, HowToPlayBack;
@@ -14,6 +14,7 @@ public class MenuController : MonoBehaviour
     public GameObject debugon, debugoff;
     public GameObject vsyncon, vsyncoff;
     public GameObject fpsmodex, debugmodex;
+    public Image image;
     // Start is called before the first frame update
     private float fps, debugmode, vsync;
     void Start()
@@ -21,6 +22,8 @@ public class MenuController : MonoBehaviour
         Debug.Log("Loader > MenuController.cs loaded");
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
         Debug.Log("FPSCounter.cs > FPS Capped at "+Screen.currentResolution.refreshRate+"! VSync is Enabled");
+        
+        //image.rectTransform.sizeDelta = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
         if(!PlayerPrefs.HasKey("fps"))
 		{
 			PlayerPrefs.SetFloat("fps", 0f);
@@ -156,7 +159,7 @@ public class MenuController : MonoBehaviour
         if (fullon.activeSelf) {
             fullon.SetActive(false);
             fulloff.SetActive(true);
-            Screen.SetResolution(1280, 720, false);
+            Screen.SetResolution(1024, 640, false);
             Debug.Log("GameCore > Fullscreen disabled");
         }
         else

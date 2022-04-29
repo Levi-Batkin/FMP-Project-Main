@@ -49,6 +49,7 @@ public class CharController : MonoBehaviour {
 			sensitivity = sensitivity * 1.5f;
 		}
 		PlayerPrefs.SetFloat("vases", 0f);
+		PlayerPrefs.SetFloat("stones", 0f);
 	}
 
 	public void ResumeGame() {

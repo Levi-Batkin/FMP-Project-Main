@@ -4,15 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoringSystem : MonoBehaviour
 {
-    private float scorenum;
-    private float scorenum1;
+    private float scorenum, scorenum1, scorenums, scorenums1;
     [Header("Audio Source")] 
     public AudioSource collect;
     private Ray ray;
     private RaycastHit hit;
     [Header("Vase Progress Bar Objects")] 
-    public GameObject vases, vases1, vases2, vases3, vases4; // Objects in Quest Menu
-    public GameObject Quest1Complete;
+    public GameObject vases, vases1, vases2, vases3, vases4; // Objects in Quest Menu - Vases
+    [Header("Stones Progress Bar Objects")] 
+    public GameObject stones, stones1, stones2, stones3, stones4; // Objects in Quest Menu - Stones
+    [Header("Quest Completion Objects")] 
+    public GameObject Quest1Complete, Quest2Complete; // Objects for the Quest Completion - UI Canvas
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,13 @@ public class ScoringSystem : MonoBehaviour
         vases2.SetActive(false);
         vases3.SetActive(false);
         vases4.SetActive(false);
+        stones.SetActive(true);
+        stones1.SetActive(false);
+        stones2.SetActive(false);
+        stones3.SetActive(false);
+        stones4.SetActive(false);
         Quest1Complete.SetActive(false);
+        Quest2Complete.SetActive(false);
         
     }
     private IEnumerator Quest1Completed()
@@ -29,6 +37,12 @@ public class ScoringSystem : MonoBehaviour
         Quest1Complete.SetActive(true);
         yield return new WaitForSeconds(3);
         Quest1Complete.SetActive(false);
+    }
+    private IEnumerator Quest2Completed()
+    {
+        Quest2Complete.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest2Complete.SetActive(false);
     }
     // Update is called once per frame
     private void Update()
@@ -74,6 +88,42 @@ public class ScoringSystem : MonoBehaviour
                         vases4.SetActive(true);
                         StartCoroutine(Quest1Completed());
                         scorenum++;
+                    }
+                }
+                if (hit.transform.tag == "collectable2")
+                {
+                    collect.Play();
+                    scorenums1 = PlayerPrefs.GetFloat("stones");
+                    scorenums = scorenums1 + 1f;
+                    PlayerPrefs.SetFloat("stones", scorenums);
+                    Destroy(hit.transform.gameObject);
+                    
+                    if( scorenums > 0 )
+                    {
+                        stones.SetActive(false);
+                        stones1.SetActive(false);
+                        stones2.SetActive(false);
+                        stones3.SetActive(false);
+                        stones4.SetActive(false);
+                    }
+                    
+                    if (scorenums == 1f)
+                    {
+                        stones1.SetActive(true);
+                    }
+                    if (scorenums == 2f)
+                    {
+                        stones2.SetActive(true);
+                    }
+                    if (scorenums == 3f)
+                    {
+                        stones3.SetActive(true);
+                    }
+                    if (scorenums == 4f)
+                    {
+                        stones4.SetActive(true);
+                        StartCoroutine(Quest2Completed());
+                        scorenums++;
                     }
                 }
             }
