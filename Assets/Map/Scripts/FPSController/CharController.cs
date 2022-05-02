@@ -19,7 +19,7 @@ public class CharController : MonoBehaviour {
 	public float jumpHeight = 50f;
 	public float cursorlockstate = 1f;
 	private bool pauseToggle;
-	public GameObject pauseMenu, questMenu, helpMenu;
+	public GameObject pauseMenu, questMenu, helpMenu, pressqtext;
 	private Ray ray;
     private RaycastHit hit;
 	public LayerMask groundlayer;
@@ -41,6 +41,7 @@ public class CharController : MonoBehaviour {
 		pauseMenu.SetActive(false);
 		questMenu.SetActive(false);
 		helpMenu.SetActive(false);
+		pressqtext.SetActive(true);
 		LockCursor();
 		rb = GetComponent<Rigidbody>();
 		character = GetComponent<CharacterController> ();
@@ -55,8 +56,8 @@ public class CharController : MonoBehaviour {
 	public void ResumeGame() {
 		pauseMenu.SetActive(false);
 		questMenu.SetActive(false);
-		helpMenu.SetActive(false);
 		cursorlockstate=1f;
+		pressqtext.SetActive(true);
 		LockCursor();
 	}
 
@@ -139,6 +140,7 @@ public class CharController : MonoBehaviour {
 				pauseMenu.SetActive(true);
 				questMenu.SetActive(false);
 				cursorlockstate = 0f;
+				pressqtext.SetActive(false);
 			}
 		}
 
@@ -148,17 +150,15 @@ public class CharController : MonoBehaviour {
 			{
 				if(!pauseMenu.activeSelf)
 				{
-					UnlockCursor();
 					questMenu.SetActive(true);
 					helpMenu.SetActive(false);
-					cursorlockstate = 0f;
+					pressqtext.SetActive(false);
 				}
 			}
 			else
 			{
-				LockCursor();
 				questMenu.SetActive(false);
-				cursorlockstate = 1f;
+				pressqtext.SetActive(true);
 			}
 		}
 		if (Input.GetKeyDown("h")) 
@@ -170,6 +170,7 @@ public class CharController : MonoBehaviour {
 					UnlockCursor();
 					helpMenu.SetActive(true);
 					questMenu.SetActive(false);
+					pressqtext.SetActive(false);
 					cursorlockstate = 0f;
 				}
 			}
@@ -178,6 +179,7 @@ public class CharController : MonoBehaviour {
 				LockCursor();
 				helpMenu.SetActive(false);
 				cursorlockstate = 1f;
+				pressqtext.SetActive(true);
 			}
 		}
 	}
