@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoringSystem : MonoBehaviour
 {
-    private float scorenum, scorenum1, scorenums, scorenums1;
+    private float scorenum, scorenum1, scorenums, scorenums1, scoresnums, scoresnums1;
     [Header("Audio Source")] 
     public AudioSource collect;
     private Ray ray;
@@ -13,8 +13,10 @@ public class ScoringSystem : MonoBehaviour
     public GameObject vases, vases1, vases2, vases3, vases4; // Objects in Quest Menu - Vases
     [Header("Stones Progress Bar Objects")] 
     public GameObject stones, stones1, stones2, stones3, stones4; // Objects in Quest Menu - Stones
+    [Header("Clocks Progress Bar Objects")] 
+    public GameObject clocks, clocks1, clocks2, clocks3, clocks4; // Objects in Quest Menu - Clocks
     [Header("Quest Completion Objects")] 
-    public GameObject Quest1Complete, Quest2Complete; // Objects for the Quest Completion - UI Canvas
+    public GameObject Quest1Complete, Quest2Complete, Quest3Complete; // Objects for the Quest Completion - UI Canvas
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +30,14 @@ public class ScoringSystem : MonoBehaviour
         stones2.SetActive(false);
         stones3.SetActive(false);
         stones4.SetActive(false);
+        clocks.SetActive(true);
+        clocks1.SetActive(false);
+        clocks2.SetActive(false);
+        clocks3.SetActive(false);
+        clocks4.SetActive(false);
         Quest1Complete.SetActive(false);
         Quest2Complete.SetActive(false);
+        Quest3Complete.SetActive(false);
         
     }
     private IEnumerator Quest1Completed()
@@ -43,6 +51,12 @@ public class ScoringSystem : MonoBehaviour
         Quest2Complete.SetActive(true);
         yield return new WaitForSeconds(3);
         Quest2Complete.SetActive(false);
+    }
+    private IEnumerator Quest3Completed()
+    {
+        Quest3Complete.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest3Complete.SetActive(false);
     }
     // Update is called once per frame
     private void Update()
@@ -124,6 +138,42 @@ public class ScoringSystem : MonoBehaviour
                         stones4.SetActive(true);
                         StartCoroutine(Quest2Completed());
                         scorenums++;
+                    }
+                }
+                if (hit.transform.tag == "collectable3")
+                {
+                    collect.Play();
+                    scoresnums1 = PlayerPrefs.GetFloat("clocks");
+                    scoresnums = scoresnums1 + 1f;
+                    PlayerPrefs.SetFloat("clocks", scoresnums);
+                    Destroy(hit.transform.gameObject);
+                    
+                    if( scoresnums > 0 )
+                    {
+                        clocks.SetActive(false);
+                        clocks1.SetActive(false);
+                        clocks2.SetActive(false);
+                        clocks3.SetActive(false);
+                        clocks4.SetActive(false);
+                    }
+                    
+                    if (scoresnums == 1f)
+                    {
+                        clocks1.SetActive(true);
+                    }
+                    if (scoresnums == 2f)
+                    {
+                        clocks2.SetActive(true);
+                    }
+                    if (scoresnums == 3f)
+                    {
+                        clocks3.SetActive(true);
+                    }
+                    if (scoresnums == 4f)
+                    {
+                        clocks4.SetActive(true);
+                        StartCoroutine(Quest3Completed());
+                        scoresnums++;
                     }
                 }
             }

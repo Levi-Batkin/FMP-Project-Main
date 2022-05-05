@@ -51,6 +51,7 @@ public class CharController : MonoBehaviour {
 		}
 		PlayerPrefs.SetFloat("vases", 0f);
 		PlayerPrefs.SetFloat("stones", 0f);
+		PlayerPrefs.SetFloat("clocks", 0f);
 	}
 
 	public void ResumeGame() {

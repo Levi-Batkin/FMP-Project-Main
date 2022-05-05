@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - collectable
   - collectable2
+  - collectable3
+  - collectable4
   layers:
   - Default
   - TransparentFX
