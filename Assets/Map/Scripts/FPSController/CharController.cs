@@ -14,8 +14,7 @@ public class CharController : MonoBehaviour {
 	public GameObject cam;
 	float moveFB, moveLR;
 	float rotX, rotY;
-	public bool webGLRightClickRotation = true;
-	float gravity = -9.8f;
+	public float gravity = -9.8f;
 	public float jumpHeight = 50f;
 	public float cursorlockstate = 1f;
 	private bool pauseToggle;
@@ -45,10 +44,7 @@ public class CharController : MonoBehaviour {
 		LockCursor();
 		rb = GetComponent<Rigidbody>();
 		character = GetComponent<CharacterController> ();
-		if (Application.isEditor) {
-			webGLRightClickRotation = false;
-			sensitivity = sensitivity * 1.5f;
-		}
+		sensitivity = sensitivity * 1.5f;
 		PlayerPrefs.SetFloat("vases", 0f);
 		PlayerPrefs.SetFloat("stones", 0f);
 		PlayerPrefs.SetFloat("clocks", 0f);
@@ -90,13 +86,7 @@ public class CharController : MonoBehaviour {
 			CheckForWaterHeight ();
 
 			Vector3 movement = new Vector3 (moveFB, gravity, moveLR);
-			if (webGLRightClickRotation) {
-				if (Input.GetKey (KeyCode.Mouse0)) {
-					CameraRotation (cam, rotX, rotY);
-				}
-			} else if (!webGLRightClickRotation) {
-				CameraRotation (cam, rotX, rotY);
-			}
+			CameraRotation (cam, rotX, rotY);
 
 			movement = transform.rotation * movement;
 			if (isGrounded == true)
@@ -104,7 +94,7 @@ public class CharController : MonoBehaviour {
 				if (Input.GetKeyDown("space"))
 				{
 					Debug.Log("Jump!");
-					movement.y = jumpHeight * gravity;
+					movement.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
 				}
 			}
 			character.Move(movement * Time.deltaTime);

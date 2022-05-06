@@ -41,7 +41,12 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Windows Store Apps
+    - Standalone
+    - Android
+    - iPhone
+    - WebGL
   - serializedVersion: 2
     name: Low
     pixelLightCount: 0
@@ -79,6 +84,10 @@ QualitySettings:
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
     - Windows Store Apps
+    - Standalone
+    - iPhone
+    - Android
+    - WebGL
   - serializedVersion: 2
     name: Medium
     pixelLightCount: 1
@@ -115,7 +124,11 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
+    - Standalone
     - Windows Store Apps
+    - WebGL
+    - Android
+    - iPhone
   - serializedVersion: 2
     name: High
     pixelLightCount: 2
@@ -155,6 +168,7 @@ QualitySettings:
     - iPhone
     - Android
     - WebGL
+    - Standalone
     - Windows Store Apps
   - serializedVersion: 2
     name: Very High
@@ -191,11 +205,7 @@ QualitySettings:
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
-    excludedTargetPlatforms:
-    - WebGL
-    - Android
-    - iPhone
-    - Windows Store Apps
+    excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
     pixelLightCount: 4

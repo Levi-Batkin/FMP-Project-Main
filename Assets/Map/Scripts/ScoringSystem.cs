@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoringSystem : MonoBehaviour
 {
-    private float scorenum, scorenum1, scorenums, scorenums1, scoresnums, scoresnums1;
+    private float scorenum, scorenum1, scorenums, scorenums1, scoresnums, scoresnums1, scoresnumss, scoresnumss1;
     [Header("Audio Source")] 
     public AudioSource collect;
     private Ray ray;
@@ -15,8 +15,10 @@ public class ScoringSystem : MonoBehaviour
     public GameObject stones, stones1, stones2, stones3, stones4; // Objects in Quest Menu - Stones
     [Header("Clocks Progress Bar Objects")] 
     public GameObject clocks, clocks1, clocks2, clocks3, clocks4; // Objects in Quest Menu - Clocks
+    [Header("FlyingSaucer Progress Bar Objects")] 
+    public GameObject saucer, saucer1, saucer2, saucer3, saucer4, saucer5, saucer6; // Objects in Quest Menu - Clocks
     [Header("Quest Completion Objects")] 
-    public GameObject Quest1Complete, Quest2Complete, Quest3Complete; // Objects for the Quest Completion - UI Canvas
+    public GameObject Quest1Complete, Quest2Complete, Quest3Complete, Quest4Complete; // Objects for the Quest Completion - UI Canvas
     // Start is called before the first frame update
     void Start()
     {
@@ -35,10 +37,24 @@ public class ScoringSystem : MonoBehaviour
         clocks2.SetActive(false);
         clocks3.SetActive(false);
         clocks4.SetActive(false);
+        saucer.SetActive(true);
+        saucer1.SetActive(false);
+        saucer2.SetActive(false);
+        saucer3.SetActive(false);
+        saucer4.SetActive(false);
+        saucer5.SetActive(false);
+        saucer6.SetActive(false);
         Quest1Complete.SetActive(false);
         Quest2Complete.SetActive(false);
         Quest3Complete.SetActive(false);
+        Quest4Complete.SetActive(false);
         
+    }
+    private IEnumerator Quest4Completed()
+    {
+        Quest4Complete.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest4Complete.SetActive(false);
     }
     private IEnumerator Quest1Completed()
     {
@@ -174,6 +190,52 @@ public class ScoringSystem : MonoBehaviour
                         clocks4.SetActive(true);
                         StartCoroutine(Quest3Completed());
                         scoresnums++;
+                    }
+                }
+                if (hit.transform.tag == "collectable4")
+                {
+                    collect.Play();
+                    scoresnumss1 = PlayerPrefs.GetFloat("saucers");
+                    scoresnumss = scoresnumss1 + 1f;
+                    PlayerPrefs.SetFloat("clocks", scoresnumss);
+                    Destroy(hit.transform.gameObject);
+                    
+                    if( scoresnumss > 0 )
+                    {
+                        saucer.SetActive(false);
+                        saucer1.SetActive(false);
+                        saucer2.SetActive(false);
+                        saucer3.SetActive(false);
+                        saucer4.SetActive(false);
+                        saucer5.SetActive(false);
+                        saucer6.SetActive(false);
+                    }
+                    
+                    if (scoresnumss == 1f)
+                    {
+                        saucer1.SetActive(true);
+                    }
+                    if (scoresnumss == 2f)
+                    {
+                        saucer2.SetActive(true);
+                    }
+                    if (scoresnumss == 3f)
+                    {
+                        saucer3.SetActive(true);
+                    }
+                    if (scoresnumss == 3f)
+                    {
+                        saucer4.SetActive(true);
+                    }
+                    if (scoresnumss == 3f)
+                    {
+                        saucer5.SetActive(true);
+                    }
+                    if (scoresnumss == 6f)
+                    {
+                        saucer6.SetActive(true);
+                        StartCoroutine(Quest4Completed());
+                        scoresnumss++;
                     }
                 }
             }
