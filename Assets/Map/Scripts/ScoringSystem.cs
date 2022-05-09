@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class ScoringSystem : MonoBehaviour
 {
     private float scorenum, scorenum1, scorenums, scorenums1, scoresnums, scoresnums1, scoresnumss, scoresnumss1;
@@ -20,6 +21,7 @@ public class ScoringSystem : MonoBehaviour
     [Header("Quest Completion Objects")] 
     public GameObject Quest1Complete, Quest2Complete, Quest3Complete, Quest4Complete; // Objects for the Quest Completion - UI Canvas
     // Start is called before the first frame update
+    public Text crosshair;
     void Start()
     {
         vases.SetActive(true);
@@ -197,7 +199,7 @@ public class ScoringSystem : MonoBehaviour
                     collect.Play();
                     scoresnumss1 = PlayerPrefs.GetFloat("saucers");
                     scoresnumss = scoresnumss1 + 1f;
-                    PlayerPrefs.SetFloat("clocks", scoresnumss);
+                    PlayerPrefs.SetFloat("saucers", scoresnumss);
                     Destroy(hit.transform.gameObject);
                     
                     if( scoresnumss > 0 )
@@ -223,11 +225,11 @@ public class ScoringSystem : MonoBehaviour
                     {
                         saucer3.SetActive(true);
                     }
-                    if (scoresnumss == 3f)
+                    if (scoresnumss == 4f)
                     {
                         saucer4.SetActive(true);
                     }
-                    if (scoresnumss == 3f)
+                    if (scoresnumss == 5f)
                     {
                         saucer5.SetActive(true);
                     }
@@ -237,6 +239,20 @@ public class ScoringSystem : MonoBehaviour
                         StartCoroutine(Quest4Completed());
                         scoresnumss++;
                     }
+                }
+            }
+        }
+        else
+        {
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10f))
+            {
+                if (hit.transform.tag == "collectable" || hit.transform.tag == "collectable1" || hit.transform.tag == "collectable2" || hit.transform.tag == "collectable3" || hit.transform.tag == "collectable4")
+                {
+                    crosshair.color = new Color32(247, 228, 237, 255);
+                }
+                else
+                {
+                    crosshair.color = new Color32(0, 0, 0, 156);
                 }
             }
         }

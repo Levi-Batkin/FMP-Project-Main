@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CharController : MonoBehaviour {
 
 	public float speed = 10.0f;
-	public float sensitivity = 30.0f;
+	public float sensitivity = 350.0f;
 	public float WaterHeight = 15.5f;
 	private Rigidbody rb;
 	public bool isGrounded;
@@ -23,6 +23,7 @@ public class CharController : MonoBehaviour {
     private RaycastHit hit;
 	public LayerMask groundlayer;
 	public GameObject groundchecker;
+	Vector3 movement;
 
 	void LockCursor() {
 		cursorlockstate = 1f;
@@ -44,10 +45,11 @@ public class CharController : MonoBehaviour {
 		LockCursor();
 		rb = GetComponent<Rigidbody>();
 		character = GetComponent<CharacterController> ();
-		sensitivity = sensitivity * 1.5f;
+		sensitivity = sensitivity * 1;
 		PlayerPrefs.SetFloat("vases", 0f);
 		PlayerPrefs.SetFloat("stones", 0f);
 		PlayerPrefs.SetFloat("clocks", 0f);
+		PlayerPrefs.SetFloat("saucers", 0f);
 	}
 
 	public void ResumeGame() {
@@ -55,6 +57,7 @@ public class CharController : MonoBehaviour {
 		questMenu.SetActive(false);
 		cursorlockstate=1f;
 		pressqtext.SetActive(true);
+		helpMenu.SetActive(false);
 		LockCursor();
 	}
 
@@ -73,34 +76,50 @@ public class CharController : MonoBehaviour {
 		}
 	}
 
-	void Update(){
-		if (cursorlockstate == 1f) {
+	void Update()
+	{
+		if (cursorlockstate == 1f)
+		{
 			Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * 2f, Color.red);
 
 			moveFB = Input.GetAxis ("Horizontal") * speed;
 			moveLR = Input.GetAxis ("Vertical") * speed;
 
-			rotX = Input.GetAxis ("Mouse X") * sensitivity;
-			rotY = Input.GetAxis ("Mouse Y") * sensitivity;
+			rotX = Input.GetAxis ("Mouse X") * (sensitivity * 3.5f);
+			rotY = Input.GetAxis ("Mouse Y") * (sensitivity * 3.5f);
 
 			CheckForWaterHeight ();
 
-			Vector3 movement = new Vector3 (moveFB, gravity, moveLR);
 			CameraRotation (cam, rotX, rotY);
 
+ 			movement = new Vector3 (moveFB, movement.y, moveLR);
+
+			//var velocity2 = rb.velocity.y;
 			movement = transform.rotation * movement;
 			if (isGrounded == true)
 			{
 				if (Input.GetKeyDown("space"))
 				{
 					Debug.Log("Jump!");
-					movement.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+					//character = Mathf.Sqrt(jumpHeight * -10000 * gravity);
+					movement.y += Mathf.Sqrt(jumpHeight * -10f * gravity);
+				}
+				if (Input.GetKeyDown("m"))
+				{
+					//character = Mathf.Sqrt(jumpHeight * -10000 * gravity);
+					movement.y += Mathf.Sqrt(jumpHeight * -1000f * gravity);
 				}
 			}
+			else
+			{
+				movement.y += gravity * Time.deltaTime;
+			}
 			character.Move(movement * Time.deltaTime);
+
 		}
 
-		void CameraRotation(GameObject cam, float rotX, float rotY){		
+		void CameraRotation(GameObject cam, float rotX, float rotY)
+		{		
 			transform.Rotate (0, rotX * Time.deltaTime, 0);
 			cam.transform.Rotate (-rotY * Time.deltaTime, 0, 0);
 		}
