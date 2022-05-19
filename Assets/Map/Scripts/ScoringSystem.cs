@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class ScoringSystem : MonoBehaviour
 {
     private float scorenum, scorenum1, scorenums, scorenums1, scoresnums, scoresnums1, scoresnumss, scoresnumss1;
@@ -19,7 +20,7 @@ public class ScoringSystem : MonoBehaviour
     [Header("FlyingSaucer Progress Bar Objects")] 
     public GameObject saucer, saucer1, saucer2, saucer3, saucer4, saucer5, saucer6; // Objects in Quest Menu - Clocks
     [Header("Quest Completion Objects")] 
-    public GameObject Quest1Complete, Quest2Complete, Quest3Complete, Quest4Complete; // Objects for the Quest Completion - UI Canvas
+    public GameObject Quest1Complete, Quest2Complete, Quest3Complete, Quest4Complete, Completed; // Objects for the Quest Completion - UI Canvas
     // Start is called before the first frame update
     public Text crosshair;
     void Start()
@@ -50,13 +51,8 @@ public class ScoringSystem : MonoBehaviour
         Quest2Complete.SetActive(false);
         Quest3Complete.SetActive(false);
         Quest4Complete.SetActive(false);
+        Completed.SetActive(false);
         
-    }
-    private IEnumerator Quest4Completed()
-    {
-        Quest4Complete.SetActive(true);
-        yield return new WaitForSeconds(3);
-        Quest4Complete.SetActive(false);
     }
     private IEnumerator Quest1Completed()
     {
@@ -75,6 +71,28 @@ public class ScoringSystem : MonoBehaviour
         Quest3Complete.SetActive(true);
         yield return new WaitForSeconds(3);
         Quest3Complete.SetActive(false);
+    }
+    private IEnumerator Quest4Completed()
+    {
+        Quest4Complete.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest4Complete.SetActive(false);
+    }
+    private IEnumerator CompletedQuests()
+    {
+        yield return new WaitForSeconds(3);
+        Completed.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Quest4Complete.SetActive(false);
+        StartCoroutine(LoadFinish());
+    }
+    private IEnumerator LoadFinish()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LastLevel");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
     // Update is called once per frame
     private void Update()
@@ -238,6 +256,13 @@ public class ScoringSystem : MonoBehaviour
                         saucer6.SetActive(true);
                         StartCoroutine(Quest4Completed());
                         scoresnumss++;
+                    }
+                }
+                if (hit.transform.tag == "collectable")
+                {
+                    if (scoresnumss >= 6f && scoresnums >= 4f && scorenums >= 4f && scorenum >= 4f)
+                    {
+                        StartCoroutine(CompletedQuests());
                     }
                 }
             }
